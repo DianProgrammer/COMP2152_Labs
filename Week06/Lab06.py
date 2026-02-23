@@ -218,9 +218,7 @@ def log_command_result(command_name, target, output, filename):
     entry = entry + "-" * 40
     write_to_log(filename, entry)
 
-write_to_log("test_log.txt", "First ping test - Success")
-write_to_log("test_log.txt", "Second ping test - Failed")
-print(read_log("test_log.txt"))
+
 # ============================================================
 #  SECTION D: File I/O — CSV Files
 # ============================================================
@@ -242,20 +240,20 @@ LOG_FILE = "diagnostics.csv"
 def log_to_csv(filename, command, target, result, status):
     """Append one row to the CSV log file with a timestamp."""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    # *** YOUR CODE HERE ***
-    # Open filename in append mode ("a") with newline=""
-    # Create a csv.writer(file)
-    # Write one row: [timestamp, command, target, result, status]
-    pass
+    with open(filename, "a", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow([timestamp, command, target, result, status])
+
+  
 
 
 def read_csv_log(filename):
     """Read and display all rows from the CSV log file."""
-    # *** YOUR CODE HERE ***
-    # Open filename in read mode ("r") with newline=""
-    # Create a csv.reader(file)
-    # Loop through rows and print: " | ".join(row)
-    pass
+    with open(filename, "r", newline="") as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(" | ".join(row))
+
 
 
 # This function is COMPLETE — it uses the CSV functions above
@@ -346,18 +344,23 @@ def safe_nslookup(domain):
 
 def safe_read_log(filename):
     """Read a log file with error handling for missing files."""
-    # *** YOUR CODE HERE ***
-    # try:
-    #     open the file in read mode
-    #     read the content
-    #     if content is empty: print "Log file is empty." and return ""
-    #     else: return the content
-    # except FileNotFoundError:
-    #     print "No log file found. Run a diagnostic first."
-    #     return ""
-    # finally:
-    #     print "Log read attempt completed."
-    pass
+
+    try:
+        with open(filename, "r") as file:
+            content = file.read()
+            if content == "":
+                print("Log file is empty.")
+            else:
+                return content
+   
+    except FileNotFoundError:
+        print("No log file found, Run a diagnostic first.")
+        return ""
+   
+    finally:
+        print("Log read attempt completed.")
+
+
 
 
 def get_valid_input(prompt, valid_options):
@@ -525,5 +528,5 @@ def main():
 #  TEST YOUR WORK
 # ============================================================
 # After completing Tasks 1-3, uncomment the line below to run:
-# main()
+main()
 # ============================================================

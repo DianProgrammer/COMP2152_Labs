@@ -1,0 +1,7 @@
+2026-02-22 20:23:30,ping,1.1.1.1,28,Success
+2026-02-22 20:24:30,ping,1.1.1.1,24,Success
+2026-02-22 20:25:12,nslookup,georgebrown.ca,Not found,Failed
+2026-02-22 20:25:59,nslookup,georgebrown.ca,Not found,Failed
+2026-02-22 20:26:10,nslookup,google.com,Not found,Failed
+2026-02-22 20:26:42,nslookup,www.georgebrown.ca,Not found,Failed
+2026-02-22 20:28:49,ipconfig,all,E8-C8-29-0C-FA-9F / 10.0.0.241,Captured
