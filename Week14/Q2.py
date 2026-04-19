@@ -26,7 +26,30 @@ REQUIRED_HEADERS = {
 #   Return the list
 #   If the request fails, return an empty list
 def check_headers(url):
-    pass
+    try:
+        response = urllib.request.urlopen(url)
+        headers = dict(response.headers)
+
+        results = []
+
+        for header in REQUIRED_HEADERS:
+            if header in headers:
+                results.append({
+                    "header": header,
+                    "present": True,
+                    "value": headers[header]
+                })
+            else:
+                results.append({
+                    "header": header,
+                    "present": False,
+                    "value": "MISSING"
+                })
+
+        return results
+
+    except Exception:
+        return []
 
 
 # TODO: Complete generate_report(url, results)
@@ -38,7 +61,21 @@ def check_headers(url):
 #       Increment missing_count
 #   Print f"  Missing {missing_count} of {len(results)} security headers!"
 def generate_report(url, results):
-    pass
+    print(f"  URL: {url}")
+    missing_count = 0
+
+    for result in results:
+        header = result["header"]
+        present = result["present"]
+        value = result["value"]
+
+        if present:
+            print(f"  ✓ {header}: {value}")
+        else:
+            print(f"  ✗ {header}: MISSING — {REQUIRED_HEADERS[header]}")
+            missing_count += 1
+
+    print(f"  Missing {missing_count} of {len(results)} security headers!")
 
 
 # --- Main (provided) ---
